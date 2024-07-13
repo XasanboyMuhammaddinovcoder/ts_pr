@@ -1,8 +1,11 @@
+"use client";
+
 import Counter from "@/components/counter";
 import Link from "next/link";
 import { FC, useState } from "react";
 import { GoChevronDown } from "react-icons/go";
 import { FaStar } from "react-icons/fa";
+
 
 interface ClothesItem {
   id: number;
@@ -20,7 +23,6 @@ const clothes: ClothesItem[] = [
 ];
 
 const page: FC = () => {
-  // const [active , setActive] = useState<number>(1)
   return (
     <>
       <div className="container mt-6">
@@ -97,12 +99,7 @@ const page: FC = () => {
             </div>
           </div>
           <div className="pt-4 mt-5 flex items-center justify-between gap-8 border-t-[1px]">
-            <div className="flex items-center gap-8 rounded-[62px] px-8 py-1 bg-[#F0F0F0]">
-              <span className="cursor-pointer text-[40px]"> - </span>
-              <p className="text-[25px]"> 1  </p>
-              <span className="cursor-pointer text-[40px]"> + </span>
-            </div>
-            {/* <Counter></Counter> */}
+            <Counter></Counter>
             <div>
               <button className="w-[400px] h-[52px] rounded-[62px] bg-black text-white">Add to Cart</button>
             </div>
