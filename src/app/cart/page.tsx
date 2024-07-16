@@ -1,10 +1,12 @@
 "use client"
+
 import Counter from '@/components/counter';
 import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { FaRegTrashCan } from "react-icons/fa6";
 import { db } from '../../../firebase/config';
+import CartpageC from '@/components/CartpageC';
 
 
 
@@ -53,31 +55,7 @@ export default function page() {
             <div>
                 <h2 className='uppercase text-[42px] font-bold'>Your cart</h2>
                 <div className='flex w-full justify-between'>
-                    <div className='flex flex-col border rounded-[20px] p-12 gap-8 mb-12'>
-                        {
-                            clothes && clothes.map((el, index) => {
-                                return (
-                                    <div key={index} className='flex gap-6'>
-                                        <div>
-                                            <img className='w-60' src={el.image} alt="" />
-                                        </div>
-                                        <div className='flex gap-8 p-4'>
-                                            <div>
-                                                <h2 className='font-bold'>{el.name}</h2>
-                                                <h2>white</h2>
-                                                <h2>large</h2>
-                                                <h2 className='font-bold'>{el.price}</h2>
-                                            </div>
-                                            <div className='flex flex-col justify-between items-end'>
-                                                <span className='text-3xl cursor-pointer text-[#FF3333]'><FaRegTrashCan /></span>
-                                                <Counter></Counter>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                    <CartpageC></CartpageC>
                     <div className='border rounded-[20px] p-12 mb-12'>
                         <h2 className='font-bold text-[22px] mb-4
                         '>Order Summary</h2>

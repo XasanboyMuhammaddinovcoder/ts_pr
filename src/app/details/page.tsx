@@ -8,7 +8,7 @@ import { GoChevronDown } from "react-icons/go";
 import { FaStar } from "react-icons/fa";
 import TextCheckboxList from "@/components/Text";
 import Colors from "@/components/Colors";
-
+import ImageSelector from "@/components/img";
 
 interface ClothesItem {
   id: number;
@@ -25,10 +25,22 @@ const clothes: ClothesItem[] = [
   { id: 4, name: 'Black Striped T-shirt', dPrice: '$120', price: '$150', image: 'might_4.png' },
 ];
 
-const page: FC = () => {
+const Page: FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const success = () => {
+    const cartItem = {
+      name: 'One Life Graphic T-shirt',
+      price: '$260',
+      description: 'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
+      colors: ['white', 'black', 'lightgrey'],
+      size: ['X-Large', '4X-Large', 'XX-Small']
+    };
+
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    cart.push(cartItem);
+    localStorage.setItem('cart', JSON.stringify(cart));
+
     messageApi.open({
       type: 'success',
       content: 'This is a success message',
@@ -37,6 +49,7 @@ const page: FC = () => {
 
   return (
     <>
+      {contextHolder}
       <div className="container mt-6">
         <p>
           <span className="hover:underline">
@@ -52,14 +65,7 @@ const page: FC = () => {
       </div>
       <section className="flex items-center justify-between gap-8">
         <div className="flex mt-12 gap-4">
-          <div className="flex flex-col gap-4">
-            <img className="w-[200px] h-[220px]" src="/tshirt-1.png" alt="" />
-            <img className="w-[200px] h-[220px]" src="/tshirt-2.png" alt="" />
-            <img className="w-[200px] h-[220px]" src="/tshirt-3.png" alt="" />
-          </div>
-          <div>
-            <img className="w-[600px]" src="/tshirt-1.png" alt="" />
-          </div>
+          <ImageSelector />
         </div>
         <div>
           <div>
@@ -89,22 +95,21 @@ const page: FC = () => {
           </div>
           <div>
             Select Colors
-           <Colors></Colors>
+            <Colors />
           </div>
           <div className="border-t-[1px] pt-4 mt-5">
             Choose Size
-            <TextCheckboxList></TextCheckboxList>
+            <TextCheckboxList />
           </div>
           <div className="pt-4 mt-5 flex items-center justify-between gap-8 border-t-[1px]">
-            <Counter></Counter>
+            <Counter />
             <div>
               <Space>
-              <button onClick={success} className="w-[400px] h-[52px] rounded-[62px] bg-black text-white">Add to Cart</button>
+                <button onClick={success} className="w-[400px] h-[52px] rounded-[62px] bg-black text-white">Add to Cart</button>
               </Space>
             </div>
           </div>
           <div>
-            
           </div>
         </div>
       </section>
@@ -149,4 +154,4 @@ const page: FC = () => {
   );
 };
 
-export default page;
+export default Page;
