@@ -1,3 +1,5 @@
+import Getproducts from '@/components/Clothes';
+import NewClothes from '@/components/newClothes';
 import Link from 'next/link';
 import { FC } from 'react';
 import { FaStar } from 'react-icons/fa';
@@ -62,30 +64,7 @@ const page:FC = () => {
       <div className='relative top-[-400px]'>
         <h1 className='text-center text-[40px] font-bold mb-8'>NEW ARRIVALS</h1>
         <div className='flex justify-between'>
-          {clothes.map((el) => (
-            <Link href='/details' key={el.id}>
-              <img className='rounded-lg' src={el.image} alt={el.name} />
-              <h4 className='font-bold text-xl mt-2'>{el.name}</h4>
-              <div className='flex items-center gap-2 my-2'>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-              </div>
-              <div className='flex items-center gap-4'>
-                <h4 className='font-bold'>{el.price}</h4>
-                {el.dPrice && <h4 className='line-through'>{el.dPrice}</h4>}
-              </div>
-            </Link>
-          ))}
+          <NewClothes></NewClothes>
         </div>
         <div className='flex justify-center mt-12'>
           <Link href='/details' className='w-[218px] h-[52px] border-[1px] rounded-[62px] flex items-center justify-center mb-8 mx-auto'>
@@ -96,30 +75,7 @@ const page:FC = () => {
       <div className='relative top-[-400px] border-t-[1px]'>
         <h1 className='text-center text-[40px] font-bold mb-8 uppercase mt-8'>top selling</h1>
         <div className='flex justify-between'>
-          {clothesg.map((el) => (
-            <Link href='/details' key={el.id}>
-              <img className='rounded-lg' src={el.image} alt={el.name} />
-              <h4 className='font-bold text-xl mt-2'>{el.name}</h4>
-              <div className='flex items-center gap-2 my-2'>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-                <span className='text-[#FFC633]'>
-                  <FaStar />
-                </span>
-              </div>
-              <div className='flex items-center gap-4'>
-                <h4 className='font-bold'>{el.price}</h4>
-                {el.dPrice && <h4 className='line-through'>{el.dPrice}</h4>}
-              </div>
-            </Link>
-          ))}
+        <Getproducts></Getproducts>
         </div>
         <div className='flex justify-center mt-12'>
           <Link href='/details' className='w-[218px] h-[52px] border-[1px] flex items-center justify-center rounded-[62px] mx-auto'>

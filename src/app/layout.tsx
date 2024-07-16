@@ -10,7 +10,6 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -51,10 +50,10 @@ export default function RootLayout({
                     <input className="w-[557px] h-[48px] outline-none  bg-[#F0F0F0] rounded-[62px] pl-[52px]" type="search" placeholder="Search for products..." />
                     {/* <span className="text-[20px] font-bold relative top-[-35px] left-[20px]"><CiSearch /></span> */}
                   </div>
-                  <div className="flex gap-5 items-center">
-                    <span style={{ fontSize: '24px1', cursor: 'pointer' }}><FaShoppingCart /></span>
-                    <span style={{ fontSize: '24px1', cursor: 'pointer' }}><FaRegUserCircle /></span>
-                  </div>
+                  <span style={{ fontSize: '24px', cursor: 'pointer' }}><FaShoppingCart /></span>
+                <Link href="/login" style={{ fontSize: '24px', cursor: 'pointer', textDecoration: 'none', color: 'inherit' }}>
+                    <FaRegUserCircle />
+                </Link>
                 </div>
               </div>
             </div>
