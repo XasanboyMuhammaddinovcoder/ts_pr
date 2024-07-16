@@ -3,8 +3,11 @@
 import Counter from "@/components/counter";
 import Link from "next/link";
 import { FC, useState } from "react";
+import { Button, message, Space } from 'antd';
 import { GoChevronDown } from "react-icons/go";
 import { FaStar } from "react-icons/fa";
+import TextCheckboxList from "@/components/Text";
+import Colors from "@/components/Colors";
 
 
 interface ClothesItem {
@@ -23,6 +26,15 @@ const clothes: ClothesItem[] = [
 ];
 
 const page: FC = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'This is a success message',
+    });
+  };
+
   return (
     <>
       <div className="container mt-6">
@@ -77,35 +89,22 @@ const page: FC = () => {
           </div>
           <div>
             Select Colors
-            <div className="flex items-center gap-3 mt-4">
-              <span className="w-6 h-6 flex items-center justify-center text-white bg-[#4F4631] rounded-full cursor-pointer">
-                <GoChevronDown />
-              </span>
-              <span className="w-6 h-6 flex items-center justify-center text-white bg-[#314F4A] rounded-full cursor-pointer">
-               
-              </span>
-              <span className="w-6 h-6 flex items-center justify-center text-white bg-[#31344F] rounded-full cursor-pointer">
-               
-              </span>
-            </div>
+           <Colors></Colors>
           </div>
           <div className="border-t-[1px] pt-4 mt-5">
             Choose Size
-            <div className="flex mt-4 gap-4">
-              <span style={{ width: '104px', height: '46px' }} className="flex items-center bg-black text-white cursor-pointer rounded-[62px] justify-center">Small</span>
-              <span style={{ width: '104px', height: '46px' }} className="flex items-center justify-center  bg-[#F0F0F0] cursor-pointer rounded-[62px] justify-center">Medium</span>
-              <span style={{ width: '104px', height: '46px' }} className="flex items-center justify-center  bg-[#F0F0F0] cursor-pointer rounded-[62px] justify-center">Large</span>
-              <span style={{ width: '104px', height: '46px' }} className="flex items-center justify-center bg-[#F0F0F0] cursor-pointer rounded-[62px] justify-center ">X-Large</span>
-            </div>
+            <TextCheckboxList></TextCheckboxList>
           </div>
           <div className="pt-4 mt-5 flex items-center justify-between gap-8 border-t-[1px]">
             <Counter></Counter>
             <div>
-              <button className="w-[400px] h-[52px] rounded-[62px] bg-black text-white">Add to Cart</button>
+              <Space>
+              <button onClick={success} className="w-[400px] h-[52px] rounded-[62px] bg-black text-white">Add to Cart</button>
+              </Space>
             </div>
           </div>
           <div>
-
+            
           </div>
         </div>
       </section>

@@ -1,7 +1,10 @@
+"use client"
 import Counter from '@/components/counter';
+import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { FaRegTrashCan } from "react-icons/fa6";
+import { db } from '../../../firebase/config';
 
 
 
@@ -21,6 +24,19 @@ const clothes: ClothesItem[] = [
 
 
 export default function page() {
+    const [data , setData] = useState<object[]>([])
+    useEffect(() => {
+        const docref = doc(db , "cart" , "8WykdtxijtX6XFbVpnvsStlU8QU2" );
+        getDoc(docref).then((docSnap) => {
+            if (docSnap.exists()) {
+                console.log("Document data: " , docSnap.data());
+                setData((prev) => [...prev, {id: docSnap.id, ...docSnap.data() }]);
+            } else {
+                console.log("No such Document");
+            }
+        
+        })
+    } , [])
     return (
         <>
             <div>
