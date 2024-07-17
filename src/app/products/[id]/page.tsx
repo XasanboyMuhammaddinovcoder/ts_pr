@@ -12,6 +12,8 @@ import ImageSelector from "@/components/img";
 import { db } from "../../../../firebase/config";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
 import NewClothes from "@/components/newClothes";
+import ColorONE from "@/components/ColorOne";
+import CotegoryCheck from "@/components/cotegory";
 
 interface ClothesItem {
   id: number;
@@ -117,11 +119,11 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             Select Colors
-            <Colors />
+            <ColorONE color={productData?.color}/>
           </div>
           <div className="border-t-[1px] pt-4 mt-5">
-            Choose Size
-            <TextCheckboxList />
+            Choose Size <br />
+            <CotegoryCheck category={productData?.category}/>
           </div>
           <div className="pt-4 mt-5 flex items-center justify-between gap-8 border-t-[1px]">
             <Counter />
@@ -137,32 +139,6 @@ export default function Page({ params }: { params: { id: string } }) {
       </section>
       <div>
         <h1 className="text-center text-[40px] font-bold mt-20 my-8">NEW ARRIVALS</h1>
-        {/* <div className="flex justify-between">
-          {clothes.map((el) => (
-            <Link href="/details" key={el.id}>
-              <img className="rounded-lg" src={el.image} alt={el.name} />
-              <h4 className="font-bold text-xl mt-2">{el.name}</h4>
-              <div className="flex items-center gap-2 my-2">
-                <span className="text-[#FFC633]">
-                  <FaStar />
-                </span>
-                <span className="text-[#FFC633]">
-                  <FaStar />
-                </span>
-                <span className="text-[#FFC633]">
-                  <FaStar />
-                </span>
-                <span className="text-[#FFC633]">
-                  <FaStar />
-                </span>
-              </div>
-              <div className="flex items-center gap-4">
-                <h4 className="font-bold">{el.price}</h4>
-                {el.dPrice && <h4 className="line-through">{el.dPrice}</h4>}
-              </div>
-            </Link>
-          ))}
-        </div> */}
         <NewClothes></NewClothes>
         <div className="flex justify-center mt-12">
           <Link
