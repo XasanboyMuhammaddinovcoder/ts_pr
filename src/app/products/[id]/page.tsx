@@ -2,13 +2,16 @@
 
 import Counter from "@/components/counter";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Button, message, Space } from 'antd';
 import { GoChevronDown } from "react-icons/go";
 import { FaStar } from "react-icons/fa";
 import TextCheckboxList from "@/components/Text";
 import Colors from "@/components/Colors";
 import ImageSelector from "@/components/img";
+import { db } from "../../../../firebase/config";
+import { doc, DocumentData, getDoc } from "firebase/firestore";
+import NewClothes from "@/components/newClothes";
 
 interface ClothesItem {
   id: number;
@@ -25,16 +28,36 @@ const clothes: ClothesItem[] = [
   { id: 4, name: 'Black Striped T-shirt', dPrice: '$120', price: '$150', image: 'might_4.png' },
 ];
 
-const Page: FC = () => {
+export default function Page({ params }: { params: { id: string } }) {
+  const [productData, setProductData] = useState<DocumentData | null>(null);
   const [messageApi, contextHolder] = message.useMessage();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const docRef = doc(db, "products", `${params.id}`);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setProductData(docSnap.data());
+        } else {
+          console.log("No such document!");
+        }
+      } catch (error) {
+        console.error("Error fetching document:", error);
+      }
+    };
+
+    fetchData();
+  }, [params.id]);
 
   const success = () => {
     const cartItem = {
-      name: 'One Life Graphic T-shirt',
-      price: '$260',
-      description: 'This graphic t-shirt which is perfect for any occasion. Crafted from a soft and breathable fabric, it offers superior comfort and style.',
+      name: productData?.name,
+      price: productData?.price,
+      description: productData?.description,
       colors: ['white', 'black', 'lightgrey'],
-      size: ['X-Large', '4X-Large', 'XX-Small']
+      size: ['X-Large', '4X-Large', 'XX-Small'],
+      images: productData?.images
     };
 
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -63,13 +86,13 @@ const Page: FC = () => {
           <span className="hover:underline cursor-pointer">T-shirts</span>
         </p>
       </div>
-      <section className="flex items-center justify-between gap-8">
+      <section className="flex items-center justify-between gap-8"> 
         <div className="flex mt-12 gap-4">
-          <ImageSelector />
+          <ImageSelector images={productData?.images}/>
         </div>
         <div>
           <div>
-            <h2 className="text-[40px] font-bold">One Life Graphic T-shirt</h2>
+            <h2 className="text-[40px] font-bold">{productData?.name}</h2>
             <div className="flex items-center gap-2 my-2">
               <span className="text-[#FFC633]">
                 <FaStar />
@@ -85,12 +108,11 @@ const Page: FC = () => {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <p className="font-bold text-[32px]">$260</p>
+              <p className="font-bold text-[32px]">${productData?.price}</p>
               <p className="text-[32px]">$300</p>
             </div>
             <p className="my-6">
-              This graphic t-shirt which is perfect for any occasion. Crafted from a soft and <br />
-              breathable fabric, it offers superior comfort and style.
+             {productData?.description}
             </p>
           </div>
           <div>
@@ -114,8 +136,8 @@ const Page: FC = () => {
         </div>
       </section>
       <div>
-        <h1 className="text-center text-[40px] font-bold mb-8">NEW ARRIVALS</h1>
-        <div className="flex justify-between">
+        <h1 className="text-center text-[40px] font-bold mt-20 my-8">NEW ARRIVALS</h1>
+        {/* <div className="flex justify-between">
           {clothes.map((el) => (
             <Link href="/details" key={el.id}>
               <img className="rounded-lg" src={el.image} alt={el.name} />
@@ -140,7 +162,8 @@ const Page: FC = () => {
               </div>
             </Link>
           ))}
-        </div>
+        </div> */}
+        <NewClothes></NewClothes>
         <div className="flex justify-center mt-12">
           <Link
             href="/details"
@@ -152,6 +175,4 @@ const Page: FC = () => {
       </div>
     </>
   );
-};
-
-export default Page;
+}

@@ -72,7 +72,7 @@ const page:FC = () => {
           </Link>
         </div>
       </div>
-      <div className='relative top-[-400px] border-t-[1px]'>
+      {/* <div className='relative top-[-400px] border-t-[1px]'>
         <h1 className='text-center text-[40px] font-bold mb-8 uppercase mt-8'>top selling</h1>
         <div className='flex justify-between'>
         <Getproducts></Getproducts>
@@ -82,7 +82,7 @@ const page:FC = () => {
             View All
           </Link>
         </div>
-      </div>
+      </div> */}
       <div className='bg-[#F0F0F0] font-bold text-[40px] pt-8 uppercase h-[866px] relative top-[-300px] rounded-[40px] mb-[-150px]'>
         <h4 className='text-center mb-8'>BROWSE BY dress STYLE</h4>
         <div className='gap-12 flex flex-col justify-center items-center'>
