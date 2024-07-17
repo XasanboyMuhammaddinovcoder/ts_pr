@@ -40,17 +40,19 @@ const Filter: FC = () => {
   return (
     <div>
       <div className='flex w-full justify-between'>
-          <label className='font-bold'>Select All</label>
+          <label className='font-bold text-3xl mb-4'>Select All</label>
         <input
           type="checkbox"
+          className='w-6'
           checked={selectAll}
           onChange={handleSelectAllChange}
         />
       </div>
       {items.map(item => (
         <div key={item.id} className='flex w-full justify-between'>
-            <label>{item.label}</label>
+            <label className='font-bold text-2xl'>{item.label}</label>
           <input
+            className='w-6'
             type="checkbox"
             checked={item.checked}
             onChange={() => handleCheckboxChange(item.id)}

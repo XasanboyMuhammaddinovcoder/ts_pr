@@ -59,7 +59,8 @@ export default function Page({ params }: { params: { id: string } }) {
       description: productData?.description,
       colors: ['white', 'black', 'lightgrey'],
       size: ['X-Large', '4X-Large', 'XX-Small'],
-      images: productData?.images
+      images: productData?.images,
+      cotegory: productData?.category
     };
 
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -118,11 +119,11 @@ export default function Page({ params }: { params: { id: string } }) {
             </p>
           </div>
           <div>
-            Select Colors
+         <h1 className="font-bold text-2xl mb-4">Select Colors</h1>
             <ColorONE color={productData?.color}/>
           </div>
           <div className="border-t-[1px] pt-4 mt-5">
-            Choose Size <br />
+           <h1 className="font-bold text-2xl mb-4"> Choose Size</h1> 
             <CotegoryCheck category={productData?.category}/>
           </div>
           <div className="pt-4 mt-5 flex items-center justify-between gap-8 border-t-[1px]">
