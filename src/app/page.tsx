@@ -2,29 +2,8 @@ import Getproducts from '@/components/Clothes';
 import NewClothes from '@/components/newClothes';
 import Link from 'next/link';
 import { FC } from 'react';
-import { FaStar } from 'react-icons/fa';
 
-interface ClothesItem {
-  id: number;
-  name: string;
-  price: string;
-  dPrice?: string;
-  image: string;
-}
 
-const clothes: ClothesItem[] = [
-  { id: 1, name: 'T-SHIRT WITH TAPE DETAILS', price: '$120', image: '/new_1.png' },
-  { id: 2, name: 'SKINNY FIT JEANS', price: '$240', dPrice: '$260', image: 'new_2.png' },
-  { id: 3, name: 'CHECKERED SHIRT', price: '$180', image: 'new_3.png' },
-  { id: 4, name: 'SLEEVE STRIPED T-SHIRT', price: '$130', dPrice: '$260', image: 'new_4.png' },
-];
-
-const clothesg: ClothesItem[] = [
-  { id: 1, name: 'VERTICAL STRIPED SHIRT', price: '$212', dPrice: '$232', image: '/top_1.png' },
-  { id: 2, name: 'COURAGE GRAPHIC T-SHIRT', price: '$145', image: 'top_2.png' },
-  { id: 3, name: 'LOOSE FIT BERMUDA SHORTS', price: '$80', image: 'top_3.png' },
-  { id: 4, name: 'FADED SKINNY JEANS', price: '$210', image: 'top_4.png' },
-];
 
 const page:FC = () => {
   return (

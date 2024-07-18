@@ -2,12 +2,11 @@
 
 import Counter from "@/components/counter";
 import Link from "next/link";
-import { FC, useState, useEffect } from "react";
-import { Button, message, Space } from 'antd';
-import { GoChevronDown } from "react-icons/go";
+import {  useState, useEffect } from "react";
+import {  message, Space } from 'antd';
+
 import { FaStar } from "react-icons/fa";
-import TextCheckboxList from "@/components/Text";
-import Colors from "@/components/Colors";
+
 import ImageSelector from "@/components/img";
 import { db } from "../../../../firebase/config";
 import { doc, DocumentData, getDoc, setDoc } from "firebase/firestore";
@@ -24,13 +23,6 @@ interface ClothesItem {
   dPrice?: string;
   image: string;
 }
-
-const clothes: ClothesItem[] = [
-  { id: 1, name: 'Polo with Contrast Trims', price: '$212', dPrice: '$242', image: '/might_1.png' },
-  { id: 2, name: 'Gradient Graphic T-shirt', price: '$145', image: 'might_2.png' },
-  { id: 3, name: 'Polo with Tipping Details', price: '$180', image: 'might_3.png' },
-  { id: 4, name: 'Black Striped T-shirt', dPrice: '$120', price: '$150', image: 'might_4.png' },
-];
 
 export default function Page({ params }: { params: { id: string } }) {
   const [productData, setProductData] = useState<DocumentData | null>(null);
