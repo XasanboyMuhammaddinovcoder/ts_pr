@@ -83,27 +83,7 @@ const page:FC = () => {
           </Link>
         </div>
       </div> */}
-      <div className='bg-[#F0F0F0] font-bold text-[40px] pt-8 uppercase h-[866px] relative top-[-300px] rounded-[40px] mb-[-150px]'>
-        <h4 className='text-center mb-8'>BROWSE BY dress STYLE</h4>
-        <div className='gap-12 flex flex-col justify-center items-center'>
-          <div className='flex items-center gap-8'>
-            <div>
-              <img className='rounded-lg' src='/br_1.png' alt='Browse style 1' />
-            </div>
-            <div>
-              <img className='rounded-lg' src='/br_2.png' alt='Browse style 2' />
-            </div>
-          </div>
-          <div className='flex items-center gap-8'>
-            <div>
-              <img className='rounded-lg' src='/br_3.png' alt='Browse style 3' />
-            </div>
-            <div>
-              <img className='rounded-lg' src='/br_4.png' alt='Browse style 4' />
-            </div>
-          </div>
-        </div>
-      </div>
+     
     </>
   );
 };

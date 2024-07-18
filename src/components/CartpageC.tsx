@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { db } from "../../firebase/config";
 import { collection, doc, getDocs, deleteDoc, updateDoc, DocumentData } from "firebase/firestore";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface ClothesItem {
     id: string;
@@ -21,25 +23,31 @@ export default function CartpageC() {
     const [cartItems, setCartItems] = useState<ClothesItem[]>([]);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [editedItem, setEditedItem] = useState<Partial<ClothesItem>>({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchCartItems = async () => {
+            setLoading(true);
             const querySnapshot = await getDocs(collection(db, "cart"));
             const items: ClothesItem[] = [];
             querySnapshot.forEach((doc) => {
                 items.push({ id: doc.id, ...doc.data() } as ClothesItem);
             });
             setCartItems(items);
+            setLoading(false);
         };
 
         fetchCartItems();
     }, []);
 
     const deleteItem = async (index: number) => {
-        const itemToDelete = cartItems[index];
-        await deleteDoc(doc(db, "cart", itemToDelete.id));
-        const updatedCartItems = cartItems.filter((_, i) => i !== index);
-        setCartItems(updatedCartItems);
+        const val: any = confirm('Are you sure you want to delete?');
+        if (val) {
+            const itemToDelete = cartItems[index];
+            await deleteDoc(doc(db, "cart", itemToDelete.id));
+            const updatedCartItems = cartItems.filter((_, i) => i !== index);
+            setCartItems(updatedCartItems);
+        }
     };
 
     const startEditing = (index: number) => {
@@ -65,7 +73,27 @@ export default function CartpageC() {
 
     return (
         <>
-            {cartItems.length > 0 ? (
+            {loading ? (
+                <div className='flex flex-col border rounded-[20px] p-12 gap-8 mb-12'>
+                    {[...Array(2)].map((_, index) => (
+                        <div key={index} className='flex gap-6'>
+                            <Skeleton height={240} width={240} />
+                            <div className='flex gap-8 p-4'>
+                                <div>
+                                    <Skeleton width={200} height={30} />
+                                    <Skeleton width={200} height={20} />
+                                    <Skeleton width={200} height={20} />
+                                    <Skeleton width={100} height={30} />
+                                </div>
+                                <div className='flex flex-col justify-between items-end'>
+                                    <Skeleton circle height={40} width={40} />
+                                    <Skeleton width={100} height={30} />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : cartItems.length > 0 ? (
                 <div className='flex flex-col border rounded-[20px] p-12 gap-8 mb-12'>
                     {cartItems.map((el, index) => (
                         <div key={index} className='flex gap-6'>
@@ -114,8 +142,8 @@ export default function CartpageC() {
                 </div>
             ) : (
                 <>
-                    <h1>There are currently no products available...</h1>
-                    <Link className="underline" href="/details">Add product +</Link>
+                    <h1 className="my-20">There are currently no products available...</h1>
+
                 </>
             )}
         </>
