@@ -10,7 +10,7 @@ import TextCheckboxList from "@/components/Text";
 import Colors from "@/components/Colors";
 import ImageSelector from "@/components/img";
 import { db } from "../../../../firebase/config";
-import { doc, DocumentData, getDoc } from "firebase/firestore";
+import { doc, DocumentData, getDoc, setDoc } from "firebase/firestore";
 import NewClothes from "@/components/newClothes";
 import ColorONE from "@/components/ColorOne";
 import CotegoryCheck from "@/components/cotegory";
@@ -52,25 +52,31 @@ export default function Page({ params }: { params: { id: string } }) {
     fetchData();
   }, [params.id]);
 
-  const success = () => {
+  const success = async () => {
     const cartItem = {
       name: productData?.name,
       price: productData?.price,
       description: productData?.description,
-      colors: ['white', 'black', 'lightgrey'],
-      size: ['X-Large', '4X-Large', 'XX-Small'],
+      colors: productData?.color,
+      size: productData?.category,
       images: productData?.images,
-      cotegory: productData?.category
+      category: productData?.category
     };
 
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     cart.push(cartItem);
     localStorage.setItem('cart', JSON.stringify(cart));
 
-    messageApi.open({
-      type: 'success',
-      content: 'This is a success message',
-    });
+    // Save to Firebase
+    try {
+      await setDoc(doc(db, "cart", params.id), cartItem);
+      messageApi.open({
+        type: 'success',
+        content: 'This is a success message',
+      });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (

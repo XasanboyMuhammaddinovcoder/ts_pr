@@ -2,15 +2,17 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import Counter from "./counter";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { db } from "../../firebase/config";
+import { collection, doc, getDocs, deleteDoc, updateDoc, DocumentData } from "firebase/firestore";
 
 interface ClothesItem {
-    id: number;
+    id: string;
     name: string;
     price: string;
     dPrice?: string;
     image: string;
-    colors: string[];
-    size: string[];
+    colors: string;
+    size: string;
     images: string;
     category: string;
 }
@@ -21,14 +23,23 @@ export default function CartpageC() {
     const [editedItem, setEditedItem] = useState<Partial<ClothesItem>>({});
 
     useEffect(() => {
-        const storedCartItems = JSON.parse(localStorage.getItem('cart') || '[]');
-        setCartItems(storedCartItems);
+        const fetchCartItems = async () => {
+            const querySnapshot = await getDocs(collection(db, "cart"));
+            const items: ClothesItem[] = [];
+            querySnapshot.forEach((doc) => {
+                items.push({ id: doc.id, ...doc.data() } as ClothesItem);
+            });
+            setCartItems(items);
+        };
+
+        fetchCartItems();
     }, []);
 
-    const deleteItem = (index: number) => {
+    const deleteItem = async (index: number) => {
+        const itemToDelete = cartItems[index];
+        await deleteDoc(doc(db, "cart", itemToDelete.id));
         const updatedCartItems = cartItems.filter((_, i) => i !== index);
         setCartItems(updatedCartItems);
-        localStorage.setItem('cart', JSON.stringify(updatedCartItems));
     };
 
     const startEditing = (index: number) => {
@@ -41,11 +52,13 @@ export default function CartpageC() {
         setEditedItem((prevState) => ({ ...prevState, [name]: value }));
     };
 
-    const saveEdit = (index: number) => {
+    const saveEdit = async (index: number) => {
+        const itemToEdit = cartItems[index];
+        const updatedItem = { ...itemToEdit, ...editedItem };
+        await updateDoc(doc(db, "cart", itemToEdit.id), updatedItem);
         const updatedCartItems = [...cartItems];
-        updatedCartItems[index] = { ...updatedCartItems[index], ...editedItem } as ClothesItem;
+        updatedCartItems[index] = updatedItem;
         setCartItems(updatedCartItems);
-        localStorage.setItem('cart', JSON.stringify(updatedCartItems));
         setEditingIndex(null);
         setEditedItem({});
     };
@@ -84,8 +97,8 @@ export default function CartpageC() {
                                     ) : (
                                         <>
                                             <h2 className='font-bold'>{el.name}</h2>
-                                            <h2>{el.colors.join(', ')}</h2>
-                                            <h2>{el.size.join(', ')}</h2>
+                                            <h2>color: <span className="border" style={{background: el.colors}}>{el.colors}</span></h2>
+                                            <h2>{el.size}</h2>
                                             <h2 className='font-bold'>${el.price}</h2>
                                             <button onClick={() => startEditing(index)} className="bg-blue-500 text-white p-2 rounded mt-2">Edit</button>
                                         </>
