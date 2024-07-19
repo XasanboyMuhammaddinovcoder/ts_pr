@@ -50,7 +50,9 @@ export default function RootLayout({
                     <input className="w-[557px] h-[48px] outline-none  bg-[#F0F0F0] rounded-[62px] pl-[52px]" type="search" placeholder="Search for products..." />
                     {/* <span className="text-[20px] font-bold relative top-[-35px] left-[20px]"><CiSearch /></span> */}
                   </div>
-                  <span style={{ fontSize: '24px', cursor: 'pointer' }}><FaShoppingCart /></span>
+                 <Link href={'/cart'}>
+                 <span style={{ fontSize: '24px', cursor: 'pointer' }}><FaShoppingCart /></span>
+                 </Link>
                 <Link href="/login" style={{ fontSize: '24px', cursor: 'pointer', textDecoration: 'none', color: 'inherit' }}>
                     <FaRegUserCircle />
                 </Link>
